@@ -1,0 +1,25 @@
+event: 
+  build: event/
+  command: python -u ../event/event.py
+  ports: 
+    - "5000:5000"
+  links:
+    - db
+pywhois:
+  build: pywhois/
+  command: python -u ../pywhois/pywhois.py
+  ports: 
+    - 5001:5001
+  links:
+    - db
+
+ipinfo:
+  build: ipinfo/
+  command: python -u ../pywhois.py
+  ports:
+    - 5002:5002
+  links:
+    - db
+
+db: 
+  image: mongo:3.0.2
