@@ -15,7 +15,7 @@ pywhois:
 
 ipinfo:
   build: ipinfo/
-  command: python -u pywhois.py
+  command: python -u ipinfo/ipinfo.py
   ports:
     - 5002:5002
   links:
