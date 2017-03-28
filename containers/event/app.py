@@ -16,7 +16,7 @@ def help():
 def event():
     event = {}
     event['name'] = request.form['name']
-    event['description'] = requests.form['description']
+    event['description'] = request.form['description']
     event['AnalystComments'] = request.form['AnalystComments']
     return json.dumps(event)
 
