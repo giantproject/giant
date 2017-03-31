@@ -12,19 +12,30 @@
 <body>
 
     <h1 class="page-header">Tools</h1>
-
     <h2>WhoIs
         <small>Tool #1</small>
     </h2>
-    <input type="text">
-    <button type="button">Find Out!</button>
+
+    <form action="/who_is_data_handler/" method="POST">
+        <input type="text" id="whoisdomain">
+        <button type="submit" onclick="window.location='/pywhois/'">
+            Find Out!
+        </button>
+    </form>
+
     <p>Used for querying the databases for specific information.</p>
 
     <h2>IPinfo
         <small>Tool #2</small>
     </h2>
-    <input type="text">
-    <button type="button">Find Out!</button>
+
+    <form action="/ipinfo_data_handler/" method="POST">
+        <input type="text" id="ip">
+        <button type="submit" onclick="window.location='/ipinfo/'">
+            Find Out!
+        </button>
+    </form>
+
     <p>Entering in an IP address would spit out information related to it.</p>
 
     
