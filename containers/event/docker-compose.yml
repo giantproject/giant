@@ -1,6 +1,6 @@
 web: 
-  build: .
-  command: python -u app.py
+  build: ../event
+  command: python -u ../event/event.py
   ports: 
     - "5000:5000"
   links:
