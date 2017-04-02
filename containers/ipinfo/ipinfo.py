@@ -4,6 +4,7 @@ import json
 import requests
 from pymongo import MongoClient
 import datetime
+from bson import json_util
 
 app = Flask(__name__)
 
@@ -18,20 +19,20 @@ def help():
 @app.route('/ipinfo/<ip>')
 def ipinfo(ip=''):
     findResult = findRecord(ip)
-    id = findResult.get('_id')
     if (findResult is not None):
-        return {"status":"Found", "id": str(id), "result": findResult}
+    	id = findResult.get('_id')
+        return json_util.dumps({"status":"Found", "id": str(id), "result": findResult})
     lookup = "http://ipinfo.io/" + ip
     result = requests.get(lookup)
     if (result.text == invalidString):
         return "{\"status\": \"Failure\", \"error\": {}}",format(invalidString)
     result = json.loads(result.text)
-    result['time'] = datetime.now()
+    result['time'] = datetime.datetime.now()
     insertionResult = insertRecord(result)
     if (insertionResult['status'] != "Success"):
         return insertionResult
-    insertionResult['result'] = json.loads(result.text)
-    return json.dumps(insertionResult)
+    insertionResult['result'] = result
+    return json_util.dumps(insertionResult)
 
 def insertRecord(record):
     try:
