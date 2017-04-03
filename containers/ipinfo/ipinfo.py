@@ -5,7 +5,8 @@ import requests
 
 app = Flask(__name__)
 
-
+client = MongoClient(os.environ['DB_1_PORT_27017_TCP_ADDR'], 27017)
+db= client.db
 
 @app.route('/')
 def help():
@@ -16,8 +17,17 @@ def help():
 def ipinfo(ip=''):
     lookup = "http://ipinfo.io/" + ip
     result = requests.get(lookup)
+    status = dbInsert(json.loads(result.txt))
+    if (status != "Success"):
+        return {"Error": + status}
     return result.text
 
+def dbInsert(record):
+    try:
+        db.ipinfo.insert_one(record)
+        return "Success"
+    except:
+        return str(e)
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5002,debug=True)
+    app.run(host='0.0.0.0',port=5002 debug=True)
 
