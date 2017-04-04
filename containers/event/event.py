@@ -21,7 +21,19 @@ def event():
     event['name'] = request.form['name']
     event['description'] = request.form['description']
     event['AnalystComments'] = request.form['AnalystComments']
-    return json.dumps(event)
+    insertionResult=insertRecord(event)
+    if (insertionResult['status'] != "Success"):
+        return insertionResult
+    insertionResult['result'] = w
+    return insertionResult
+
+
+def insertRecord(record):
+    try:
+        id = db.event.insert_one(record).inserted_id
+        return {"status":"Success", "id":id}
+    except Exception as e:
+        return {"status":"Failure", "error":str(e)}
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)

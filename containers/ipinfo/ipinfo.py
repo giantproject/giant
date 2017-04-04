@@ -17,17 +17,18 @@ def help():
 def ipinfo(ip=''):
     lookup = "http://ipinfo.io/" + ip
     result = requests.get(lookup)
-    status = dbInsert(json.loads(result.txt))
-    if (status != "Success"):
-        return {"Error": + status}
-    return result.text
+    insertionResult = insertRecord(json.loads(result.text))
+    if (insertionResult['status'] != "Success"):
+        return insertionResult
+    insertionResult['result'] = result.text
+    return insertionResult
 
-def dbInsert(record):
+def insertRecord(record):
     try:
-        db.ipinfo.insert_one(record)
-        return "Success"
-    except:
-        return str(e)
+        id = db.ipinfo.insert_one(record).inserted_id
+        return {"status":"Success", "id":id}
+    except Exception as e:
+        return {"status":"Failure", "error": str(e)}
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port=5002, debug=True)
 
