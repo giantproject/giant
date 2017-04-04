@@ -20,13 +20,13 @@ def ipinfo(ip=''):
     insertionResult = insertRecord(json.loads(result.text))
     if (insertionResult['status'] != "Success"):
         return insertionResult
-    insertionResult['result'] = result.text
-    return insertionResult
+    insertionResult['result'] = json.loads(result.text)
+    return json.dumps(insertionResult)
 
 def insertRecord(record):
     try:
         id = db.ipinfo.insert_one(record).inserted_id
-        return {"status":"Success", "id":id}
+        return {"status":"Success", "id":str(id)}
     except Exception as e:
         return {"status":"Failure", "error": str(e)}
 if __name__ == "__main__":
