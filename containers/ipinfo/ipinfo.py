@@ -2,7 +2,7 @@ import os
 from flask import Flask, redirect, url_for, render_template, request
 import json
 import requests
-
+from pymongo import MongoClient
 app = Flask(__name__)
 
 client = MongoClient(os.environ['DB_1_PORT_27017_TCP_ADDR'], 27017)
