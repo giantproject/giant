@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 client = MongoClient(os.environ['DB_1_PORT_27017_TCP_ADDR'], 27017)
 db= client.db
-
+invalidString = "Please provide a valid IP address"
 @app.route('/')
 def help():
     help = "Format for accessing. 'https://ipAddress/ipinfo/url_to_search' But anyway You made it here"
@@ -23,6 +23,8 @@ def ipinfo(ip=''):
         return {"status":"Found", "id" = str(id), "result": findResult}
     lookup = "http://ipinfo.io/" + ip
     result = requests.get(lookup)
+    if (result.text == invalidString):
+        return "{\"status\": \"Failure\", \"error\": {}}",format(invalidString)
     result = json.loads(result.text)
     result['time'] = datetime.now()
     insertionResult = insertRecord(result)
