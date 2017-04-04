@@ -7,6 +7,8 @@ app = Flask(__name__)
 '''client = MongoClient(os.environ['DB_1_PORT_27017_TCP_ADDR'], 27017)'''
 '''db= client.db'''
 
+ipInfoURL = os.environ['IPINFO_1_PORT_5002_TCP_ADDR']
+
 @app.route('/')
 def home():
     ipinfoURL = os.environ['IPINFO_1_PORT_5002_TCP_ADDR']
@@ -15,6 +17,8 @@ def home():
 @app.route('/ipinfo')
 def ipinfo():
     ip = request.args.get('ip')
+	r = requests.get(ipInfoURL+'/ipinfo/'+ip)
+	
     
 
 if __name__ == "__main__":
