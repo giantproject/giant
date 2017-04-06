@@ -1,32 +1,30 @@
-from flask import Flask, render_template, request
-import webbrowser
+import os
+from flask import Flask, redirect, url_for, render_template, request
+import json
 import requests
+
 app = Flask(__name__)
 
-@app.route("/")
-def main():
-    return render_template('homePage.html')
+'''client = MongoClient(os.environ['DB_1_PORT_27017_TCP_ADDR'], 27017)'''
+'''db= client.db'''
 
-@app.route('/who_is_data_handler', methods=['POST'])
-def whois_data():
-    whoisdomain = request.form.whoisdomain
-    r = requests.get('8.8.8.8/pywhois/' + whoisdomain)
+ipInfoURL = os.environ['IPINFO_1_PORT_5002_TCP_ADDR']
 
-    if r.status_code == 200:
-        return r.text
-    else:
-        return {'error': 'Non 200 status code'}
 
-@app.route('/ipinfo_data_handler', methods=['POST'])
-def ipinfo_data():
-    ip = request.form.ip
-    r = requests.get('8.8.8.8/ipinfo/' + ip)
+@app.route('/')
+def home():
+    return "hello"
 
-    if r.status_code == 200:
-        return r.text
-    else:
-        return {'error': 'Non 200 status code'}
+
+# ipinfoURL = os.environ['IPINFO_1_PORT_5002_TCP_ADDR']
+# render_template('home.html')
+
+@app.route('/ipinfo')
+def ipinfo():
+    ip = request.args.get('ip')
+    r = requests.get(ipInfoURL + '/ipinfo/' + ip)
+    return r.json()
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0', port=5003, debug=True)

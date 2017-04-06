@@ -21,6 +21,15 @@ ipinfo:
   links:
     - db
 
+webclient:
+    build: webClient/
+    command: python -u webClient.py
+    ports:
+      - "5003:5003"
+    links:
+      - event
+      - pywhois
+      - ipinfo
 db: 
   image: mongo:3.0.2
   volumes:
