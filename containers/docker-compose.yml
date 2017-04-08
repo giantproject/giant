@@ -23,5 +23,6 @@ ipinfo:
 
 db: 
   image: mongo:3.0.2
+  container_name: mongodb
   volumes:
     - /data/db 
