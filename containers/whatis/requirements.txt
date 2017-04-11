@@ -1,4 +1,3 @@
 flask
 pymongo
-python-whois
-requests
+bson

@@ -21,6 +21,14 @@ ipinfo:
   links:
     - db
 
+whatis:
+  build: whatis/
+  command: python -u whatis.py
+  ports:
+    - "5003:5003"
+  links:
+    - db
+
 db: 
   image: mongo:3.0.2
   container_name: mongodb
