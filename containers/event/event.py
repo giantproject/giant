@@ -17,15 +17,18 @@ def help():
     return help
 @app.route('/event', methods=['POST'])
 def event():
+    findResult = findRecord(request.form['name'])
+    if (findResult is not None):
+        return json_util.dumps({"status":"Found", "id:"str(id), "result": findResult})
     event = {}
     event['name'] = request.form['name']
     event['description'] = request.form['description']
     event['AnalystComments'] = request.form['AnalystComments']
     insertionResult=insertRecord(event)
     if (insertionResult['status'] != "Success"):
-        return insertionResult
-    insertionResult['result'] = w
-    return insertionResult
+        return json_util.dumps(event)
+    insertionResult['result'] = event
+    return json_util.dumps(insetionResult)
 
 
 def insertRecord(record):
@@ -35,6 +38,13 @@ def insertRecord(record):
     except Exception as e:
         return {"status":"Failure", "error":str(e)}
 
+def findRecord(name):
+    try:
+        record = db.event.find_one({'name': name})
+        if (record is not None):
+            return record
+        else:
+            return None
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
 
