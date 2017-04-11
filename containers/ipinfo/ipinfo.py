@@ -17,6 +17,7 @@ def help():
 @app.route('/ipinfo')
 @app.route('/ipinfo/<ip>')
 def ipinfo(ip=''):
+    return ip
     findResult = findRecord(ip)
     id = findResult.get('_id')
     if (findResult is not None):

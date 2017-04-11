@@ -4,7 +4,7 @@ import json
 import requests
 
 app = Flask(__name__)
-ipInfoIp = os.environ['TODO_CONTAINERS_IPINFO_1_PORT_5002_TCP_ADDR']
+ipInfoIp = os.environ['IPINFO_1_PORT_5002_TCP_ADDR']
 
 @app.route('/')
 def home():
@@ -13,7 +13,7 @@ def home():
 @app.route('/ipinfo', methods=['POST'])
 def ipInfo():
     ip = request.form['ip']
-    return request.get(ipInfoIp+':5002/ipinfo/'+ip)
+    return requests.get('http://'+ipInfoIp+':5002/ipinfo/'+ip).text
 	
 
 
