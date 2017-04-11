@@ -18,10 +18,9 @@ def help():
 @app.route('/ipinfo')
 @app.route('/ipinfo/<ip>')
 def ipinfo(ip=''):
-    return ip
     findResult = findRecord(ip)
     if (findResult is not None):
-    	id = findResult.get('_id')t 
+    	id = findResult.get('_id')
         return json_util.dumps({"status":"Found", "id": str(id), "result": findResult})
     lookup = "http://ipinfo.io/" + ip
     result = requests.get(lookup)
