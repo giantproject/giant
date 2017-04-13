@@ -27,7 +27,6 @@ webclient:
     ports:
       - "5003:5003"
     links:
-      - event
       - pywhois
       - ipinfo
 db: 

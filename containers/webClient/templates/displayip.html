@@ -1,0 +1,30 @@
+
+
+<script>
+function goback() {
+	window.history.back();
+}
+
+function parse_json() {
+	var json = JSON.parse({{parsed_json|tojson}});
+	var jsonpretty = JSON.stringify(json, undefined, 2);
+	var labelpretty = document.getElementById("jsonpretty");
+	labelpretty.innerHTML = jsonpretty;
+	
+	
+	
+}
+
+window.onload = function(){
+parse_json();	
+
+};
+
+</script>
+
+<body>
+<button onclick="goback()">back</button>
+<pre id = "jsonpretty"></pre>
+
+ 
+</body>
