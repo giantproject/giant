@@ -9,9 +9,20 @@ ipInfoIp = os.environ['IPINFO_1_PORT_5002_TCP_ADDR']
 pywhoisIp = os.environ['PYWHOIS_1_PORT_5001_TCP_ADDR']
 
 @app.route('/')
+@app.route('/home.html')
 def home():
     
-    return render_template("home.html", jsonIp="")
+    return render_template("home.html")
+
+@app.route('/displayip.html')
+def displayip():
+    unparsed_json = ()
+    return render_template("displayip.html", parsed_json = unparsed_json);
+
+@app.route('/displaydomain.html')
+def displaydomain():
+    unparsed_json = ()
+    return render_template("displaydomain.html", parsed_json = unparsed_json)
 
 @app.route('/ipinfo', methods=['POST'])
 def ipInfo():
