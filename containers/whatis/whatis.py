@@ -31,7 +31,7 @@ for line in servicesFile:
     # Dumps each record to the db
     db.whatis.insert(mongoRecord)
 
-@app.route('/whatis')
+@app.route('/')
 def help():
     help = "Format for accessing. 'http://ipAddress/whatis/port/proto(optional)\nThe purpose of this is to find out what a port and protocol means."
     return help
@@ -71,5 +71,5 @@ def findRecord(port, proto=None):
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5001, debug=True)
+    app.run(host='0.0.0.0', port=5003, debug=True)
 
