@@ -47,7 +47,7 @@ def event():
     name = request.form['name']
     description = request.form['description']
     comments = request.form['comments']
-    requests.post('http://'+eventIp+':5000/event/', request.form)
+    return requests.post('http://'+eventIp+':5000/event/', request.form).text
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5003, debug=True)
