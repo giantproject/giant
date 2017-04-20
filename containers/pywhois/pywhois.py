@@ -2,7 +2,6 @@ import os
 from flask import Flask, redirect, url_for, render_template, request
 import json
 import whois
-import requests
 from pymongo import MongoClient
 from bson import json_util
 app = Flask(__name__)

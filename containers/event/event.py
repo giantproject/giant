@@ -19,7 +19,7 @@ def help():
 def event():
     findResult = findRecord(request.form['name'])
     if (findResult is not None):
-        return json_util.dumps({"status":"Found", "id:"str(id), "result": findResult})
+        return json_util.dumps({"status":"Found", "id":str(id), "result": findResult})
     event = {}
     event['name'] = request.form['name']
     event['description'] = request.form['description']
@@ -28,7 +28,7 @@ def event():
     if (insertionResult['status'] != "Success"):
         return json_util.dumps(event)
     insertionResult['result'] = event
-    return json_util.dumps(insetionResult)
+    return json_util.dumps(insertionResult)
 
 
 def insertRecord(record):
