@@ -18,7 +18,7 @@ def help():
 def pywhois(domain):
     findResult = findRecord(domain)
     if (findResult is not None):
-    	id = findResult.get('_id')
+        id = findResult.get('_id')
         return json_util.dumps({"status":"Found", "id": str(id), "result": findResult})
     try:
         w = whois.whois(domain)
@@ -33,7 +33,7 @@ def pywhois(domain):
 
 def insertRecord(record, domain):
     try:
-	record['search_domain'] = domain
+        record['search_domain'] = domain
         id = db.pywhois.insert_one(record).inserted_id
         return {"status":"Success", "id":str(id)}
     except Exception as e:
