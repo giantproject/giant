@@ -44,10 +44,9 @@ def pyWhoIs():
 
 @app.route('/event', methods=['POST'])
 def event():
-    name = request.form['name']
-    description = request.form['description']
-    comments = request.form['comments']
-    return requests.post('http://'+eventIp+':5000/event/', request.form).text
-
+    r = requests.post('http://'+eventIp+':5000/event', request.form)
+    if r.status_code==200:
+        return r.text
+    return request.form
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5003, debug=True)
