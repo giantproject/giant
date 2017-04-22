@@ -1,0 +1,61 @@
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<script>
+function goback() {
+	window.history.back();
+}
+
+function parse_json() {
+try {
+	var json = JSON.parse({{parsed_json|tojson}});
+	var jsonpretty = JSON.stringify(json, undefined, 2);
+	var labelpretty = document.getElementById("jsonpretty");
+	labelpretty.innerHTML = jsonpretty;
+	labelpretty.hidden = false;
+	} catch (err) {
+		
+	}
+	
+}
+
+window.onload = function(){
+parse_json();	
+
+};
+
+</script>
+
+<body>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand">Giant</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="home.html">Home</a></li>
+      <li><a href="displayip.html">Ip Info</a></li>
+      <li class="active"><a href="displaydomain.html">Who Is</a></li>
+      <li><a href="displaywhatis.html">What Is</a></li>
+	  <li><a href="displayevent.html">Event</a></li>
+    </ul>
+  </div>
+</nav>
+
+<form action="/pywhois" method="post">
+	<div class="container">
+		<h1>Who Is</h1>
+		<p>Enter a domain: <p>
+		<input type="text" name="domain"><br>
+		<button class="btn btn-default" type="submit">Submit</button>
+	</div>
+</form>
+
+<pre hidden='hidden' id = "jsonpretty"></pre>
+
+ 
+</body>

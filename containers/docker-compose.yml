@@ -21,8 +21,16 @@ whatis:
   links:
     - db
 
+webclient:
+    build: webClient/
+    command: python -u webClient.py
+    ports:
+      - "5003:5003"
+    links:
+      - pywhois
+      - ipinfo
+      - event
 db: 
   image: mongo:3.0.2
-  container_name: mongodb
   volumes:
     - /data/db 

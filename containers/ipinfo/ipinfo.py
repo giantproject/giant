@@ -20,7 +20,7 @@ def help():
 def ipinfo(ip=''):
     findResult = findRecord(ip)
     if (findResult is not None):
-    	id = findResult.get('_id')t 
+    	id = findResult.get('_id')
         return json_util.dumps({"status":"Found", "id": str(id), "result": findResult})
     lookup = "http://ipinfo.io/" + ip
     result = requests.get(lookup)
