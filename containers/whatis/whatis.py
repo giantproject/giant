@@ -35,6 +35,7 @@ for line in servicesFile:
 def help():
     help = "Format for accessing. 'http://ipAddress/whatis/port/proto(optional)\nThe purpose of this is to find out what a port and protocol means."
     return help
+@app.route('/whatis/<port>')
 @app.route('/whatis/<port>/<proto>')
 def whatis(port, proto=None):
     # I don't want to try this if the port isn't a number.
@@ -69,7 +70,19 @@ def findRecord(port, proto=None):
     except:
         return None
 
+@app.route("/whatis/table")
+@app.route("/whatis/table/<amount>")
+def findMany(amount=10):
+  portsList = [443,3389,162,80,23,123,22,80,2000,3,1,25,5060,137,445,2323,161,110,88,5355,139,445]
+  resultsList = []
+  try:
+    resultsList.append(db.whatis.find_one({"Port Number": 53, "Transport Protocol":"udp"}, {"_id":False})) # 53 doesn't use tcp
+    for i in portsList[:amount-1]:
+      resultsList.append(db.whatis.find_one({"Port Number":i, "Transport Protocol":"tcp"},{"_id":False}))
 
+    return json_util.dumps(resultsList) # Only return the amount requested because of the limit above
+  except:
+    return json.dumps({"Error": "There was an error returning the information to you. My apologies"})
 if __name__ == "__main__":
     app.run(host='0.0.0.0',  debug=True)
 
