@@ -1,15 +1,15 @@
 event: 
   build: event/
   command: python -u event.py
-  ports: 
-    - "5000:5000"
+  ports:
+    - "5000"
   links:
     - db
 pywhois:
   build: pywhois/
   command: python -u pywhois.py
-  ports: 
-    - "5001:5001"
+  ports:
+    - "5000"
   links:
     - db
 
@@ -17,7 +17,15 @@ ipinfo:
   build: ipinfo/
   command: python -u ipinfo.py
   ports:
-    - "5002:5002"
+    - "5000"
+  links:
+    - db
+
+whatis:
+  build: whatis/
+  command: python -u whatis.py
+  ports:
+    - "5000"
   links:
     - db
 
@@ -25,7 +33,7 @@ webclient:
     build: webClient/
     command: python -u webClient.py
     ports:
-      - "5003:5003"
+      - "5000:5000"
     links:
       - pywhois
       - ipinfo
