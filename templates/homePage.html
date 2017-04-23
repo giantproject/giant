@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>GIANT</title>
+
+</head>
+
+<body>
+
+    <h1 class="page-header">Tools</h1>
+    <h2>WhoIs
+        <small>Tool #1</small>
+    </h2>
+
+    <form action="/who_is_data_handler/" method="POST">
+        <input type="text" id="whoisdomain">
+        <button type="submit" onclick="window.location='/pywhois/'">
+            Find Out!
+        </button>
+    </form>
+
+    <p>Used for querying the databases for specific information.</p>
+
+    <h2>IPinfo
+        <small>Tool #2</small>
+    </h2>
+
+    <form action="/ipinfo_data_handler/" method="POST">
+        <input type="text" id="ip">
+        <button type="submit" onclick="window.location='/ipinfo/'">
+            Find Out!
+        </button>
+    </form>
+
+    <p>Entering in an IP address would spit out information related to it.</p>
+
+    
+</body>
+
+</html>

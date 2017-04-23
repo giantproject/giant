@@ -2,7 +2,6 @@ import os
 from flask import Flask, redirect, url_for, render_template, request
 import json
 import whois
-import requests
 from pymongo import MongoClient
 from bson import json_util
 app = Flask(__name__)
@@ -18,7 +17,7 @@ def help():
 def pywhois(domain):
     findResult = findRecord(domain)
     if (findResult is not None):
-    	id = findResult.get('_id')
+        id = findResult.get('_id')
         return json_util.dumps({"status":"Found", "id": str(id), "result": findResult})
     try:
         w = whois.whois(domain)
@@ -33,7 +32,7 @@ def pywhois(domain):
 
 def insertRecord(record, domain):
     try:
-	record['search_domain'] = domain
+        record['search_domain'] = domain
         id = db.pywhois.insert_one(record).inserted_id
         return {"status":"Success", "id":str(id)}
     except Exception as e:
@@ -52,5 +51,5 @@ def findRecord(domain):
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5001, debug=True)
+    app.run(host='0.0.0.0', debug=True)
 
