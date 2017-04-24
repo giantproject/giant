@@ -79,7 +79,11 @@ def event():
 def whatIs():
     portNum = request.form['number']
     proto = request.form['proto']
-    unparsed_json = requests.get('http://' + whatIsIp + ':5000/whatis/' + portNum + '/' + proto).text
+    if proto != "":
+        unparsed_json = requests.get('http://' + whatIsIp + ':5000/whatis/' + portNum + '/' + proto).text
+    else:
+        unparsed_json = requests.get('http://' + whatIsIp + ':5000/whatis/' + portNum).text
+
     return render_template('displaywhatis.html', parsed_json=unparsed_json)
 
 

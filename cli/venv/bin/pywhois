@@ -1,0 +1,10 @@
+#!/Users/zcatbear/git/repl/venv/bin/python
+# EASY-INSTALL-ENTRY-SCRIPT: 'pywhois==0.1','console_scripts','pywhois'
+__requires__ = 'pywhois==0.1'
+import sys
+from pkg_resources import load_entry_point
+
+if __name__ == '__main__':
+    sys.exit(
+        load_entry_point('pywhois==0.1', 'console_scripts', 'pywhois')()
+    )
