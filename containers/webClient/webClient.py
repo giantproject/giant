@@ -35,6 +35,11 @@ def ipInfo():
     ip = request.form['ip']
     unparsed_json = requests.get('http://'+ipInfoIp+':5000/ipinfo/'+ip).text
     return render_template('displayip.html', parsed_json = unparsed_json)
+
+@app.route("/ipinfo/cli", methods=['POST'])
+def ipInfoCLI():
+    ip = request.form['ip']
+    return requests.get('http://' + ipInfoIp + ':5000/ipinfo/' + ip).text
 	
 @app.route('/pywhois', methods=['POST'])
 def pyWhoIs():
@@ -42,7 +47,13 @@ def pyWhoIs():
     unparsed_json = requests.get('http://'+pyWhoIsIp+':5000/pywhois/'+domain).text
     return render_template('displaydomain.html', parsed_json = unparsed_json)
 
+@app.route('/pywhois/cli', methods=['POST'])
+def pyWhoIsCLI():
+    domain = request.form['domain']
+    return requests.get('http://'+pyWhoIsIp+':5000/pywhois/'+domain).text
+
 @app.route('/event', methods=['POST'])
+@app.route('/event/cli',methods=['POST']) # Makes it easier for the CLI to work
 def event():
     r = requests.post('http://'+eventIp+':5000/event', request.form)
     if r.status_code==200:
