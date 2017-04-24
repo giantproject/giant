@@ -77,15 +77,23 @@ def event():
 
 @app.route('/whatis', methods=['POST'])
 def whatIs():
-    portNum = request.form['number']
+    port = request.form['port']
     proto = request.form['proto']
     if proto != "":
-        unparsed_json = requests.get('http://' + whatIsIp + ':5000/whatis/' + portNum + '/' + proto).text
+        unparsed_json = requests.get('http://' + whatIsIp + ':5000/whatis/' + port + '/' + proto).text
     else:
-        unparsed_json = requests.get('http://' + whatIsIp + ':5000/whatis/' + portNum).text
+        unparsed_json = requests.get('http://' + whatIsIp + ':5000/whatis/' + port).text
 
     return render_template('displaywhatis.html', parsed_json=unparsed_json)
 
+@app.route('/whatis/cli', methods=['POST'])
+def whatsCLI():
+    port = request.form['port']
+    proto = request.form['proto']
+    if proto != "":
+        return requests.get('http://' + whatIsIp + ':5000/whatis/' + port + '/' + proto).text
+    else:
+        return requests.get('http://' + whatIsIp + ':5000/whatis/' + port).text
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)

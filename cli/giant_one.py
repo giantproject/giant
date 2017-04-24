@@ -11,7 +11,7 @@ def callContainer(url, container, form):
   if r.status_code == 200:
     return r.text
   else:
-    return "Issue happened\n"
+    return form
 @click.group()
 def cli():
   pass
@@ -34,8 +34,8 @@ def pywhois(domain):
 
 @cli.command()
 @click.option('--port', required=True, help="Port you want more information about")
-@click.option('--proto', default=None, help="Protocol deliniating by protocol if one such exists")
-def whatis(port, protocol):
+@click.option('--proto', default='', help="Protocol deliniating by protocol if one such exists")
+def whatis(port, proto):
   form = {}
   form['port'] = port
   form['proto'] = proto
