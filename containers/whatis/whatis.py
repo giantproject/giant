@@ -53,7 +53,7 @@ def whatis(port, proto=None):
     findResult = findRecord(port, proto)
     if (findResult is not None):
         return json_util.dumps({"status":"Found", "result": findResult})
-    return json.dumps({"status":"Not Found", "message":"This port and protocol pair couldn't be found could not be found in the database, it could be a nonstandard port or new."})
+    return json.dumps({"status":"Not Found", "message":"This port and protocol pair could not be found in the database, it could be a nonstandard port or new."})
 
 
 
@@ -62,9 +62,10 @@ def findRecord(port, proto=None):
 
     try:
         if proto is not None:
-            record = db.whatis.find({'Port Number':port})
+            record = db.whatis.find({'Port Number': port, "Transport Protocol": proto})
         else:
-            record = db.whatis.find({'Port Number':port, "Transport Protocol": proto})
+            record = db.whatis.find({'Port Number': port})
+
         # Returns a list because it can technically have multiple records if they don't have the protocol defined.
         return [x for x in record]
     except:

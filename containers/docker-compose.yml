@@ -38,6 +38,7 @@ webclient:
       - pywhois
       - ipinfo
       - event
+      - whatis
 db: 
   image: mongo:3.0.2
   volumes:

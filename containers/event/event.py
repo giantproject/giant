@@ -36,6 +36,7 @@ def event():
   return json_util.dumps(insertionResult)
 
 
+
 def insertRecord(record):
   try:
     id = db.event.insert_one(record).inserted_id
