@@ -24,7 +24,7 @@ def event():
     event = {}
     event['name'] = request.form['name']
     event['description'] = request.form['description']
-    event['AnalystComments'] = request.form['AnalystComments']
+    event['comments'] = request.form['comments']
     insertionResult=insertRecord(event)
     if (insertionResult['status'] != "Success"):
         return json_util.dumps(event)
