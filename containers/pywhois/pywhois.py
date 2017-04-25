@@ -2,6 +2,7 @@ import os
 from flask import Flask, redirect, url_for, render_template, request
 import json
 import whois
+from datetime import datetime
 from pymongo import MongoClient
 from bson import json_util
 app = Flask(__name__)
@@ -24,6 +25,7 @@ def pywhois(domain):
     except Exception as e:
         return json.dumps({"status":"Failure", "error":str(e)})
     w = json.loads(str(w))
+    w["time"] = str(datetime.now())
     insertionResult=insertRecord(w, domain)
     if (insertionResult['status'] != "Success"):
         return json_util.dumps(insertionResult)
@@ -49,7 +51,14 @@ def findRecord(domain):
     except:
         return None
 
-
+@app.route("/pywhois/table")
+@app.route("/pywhois/table/<amount>")
+def findMany(amount=10):
+  try:
+    recordList = db.pywhois.find().sort("time", -1).limit(int(amount))  # The -1 means from soonest to latest
+    return json_util.dumps(recordList) # Only return the amount requested because of the limit above
+  except:
+    return json.dumps({"Error": "There was an error returning the information to you. My apologies"})
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
 

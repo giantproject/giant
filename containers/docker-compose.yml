@@ -2,14 +2,14 @@ event:
   build: event/
   command: python -u event.py
   ports:
-    - "5000"
+    - "5004:5000"
   links:
     - db
 pywhois:
   build: pywhois/
   command: python -u pywhois.py
   ports:
-    - "5000"
+    - ":5003:5000"
   links:
     - db
 
@@ -17,7 +17,7 @@ ipinfo:
   build: ipinfo/
   command: python -u ipinfo.py
   ports:
-    - "5000"
+    - "5001:5000"
   links:
     - db
 
@@ -25,7 +25,7 @@ whatis:
   build: whatis/
   command: python -u whatis.py
   ports:
-    - "5000"
+    - "5002:5000"
   links:
     - db
 
@@ -42,4 +42,6 @@ webclient:
 db: 
   image: mongo:3.0.2
   volumes:
-    - /data/db 
+    - /data/db
+  ports:
+    - "27017:27017"
