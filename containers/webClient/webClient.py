@@ -72,7 +72,7 @@ def event():
     r = requests.post('http://' + eventIp + ':5000/event', request.form)
     if r.status_code == 200:
         return r.text
-    return request.form
+    return json.dumps(request.form) # because you can't return a dict
 
 
 @app.route('/whatis', methods=['POST'])
