@@ -20,7 +20,7 @@ function parse_json() {
 
 function get_table() {
 	request = new XMLHttpRequest();
-	request.open("POST", "/gettable", true);
+	request.open("POST", "/getiptable", true);
 	request.onreadystatechange = display_table;
 	request.send(null);
 
@@ -28,35 +28,33 @@ function get_table() {
 
 function display_table() {
 	if (request.readyState == 4 && request.status == 200) {
-		unparsed_json = JSON.parse(request.responseText);
-		var pre = document.getElementById("jsonpretty");
-		pre.innerHTML = unparsed_json;
-        var table = document.getElementById("ipInfoTable");
+            unparsed_json = JSON.parse(request.responseText);
+            var table = document.getElementById("ipInfoTable");
 
-		for (var i = 0; i < unparsed_json.length; i++) {
-            var row = table.insertRow(i+1);
-            var ip = row.insertCell(0);
-            ip.innerHTML = unparsed_json[i].ip;
-            var loc = row.insertCell(1);
-            loc.innerHTML = unparsed_json[i].loc;
-            var postal = row.insertCell(2);
-            postal.innerHTML = unparsed_json[i].postal;
-            var city = row.insertCell(3);
-            city.innerHTML = unparsed_json[i].city;
-            var country = row.insertCell(4);
-            country.innerHTML = unparsed_json[i].country;
-            var region = row.insertCell(5);
-            region.innerHTML = unparsed_json[i].region;
-            var hostname = row.insertCell(6);
-            hostname.innerHTML = unparsed_json[i].hostname;
-            var phone = row.insertCell(7);
-            phone.innerHTML = unparsed_json[i].phone;
-            var time = row.insertCell(8);
-            time.innerHTML = unparsed_json[i].time;
-            var org = row.insertCell(9);
-            org.innerHTML = unparsed_json[i].org;
+            for (var i = 0; i < unparsed_json.length; i++) {
+                var row = table.insertRow(i+1);
+                var ip = row.insertCell(0);
+                ip.innerHTML = unparsed_json[i].ip;
+                var loc = row.insertCell(1);
+                loc.innerHTML = unparsed_json[i].loc;
+                var postal = row.insertCell(2);
+                postal.innerHTML = unparsed_json[i].postal;
+                var city = row.insertCell(3);
+                city.innerHTML = unparsed_json[i].city;
+                var country = row.insertCell(4);
+                country.innerHTML = unparsed_json[i].country;
+                var region = row.insertCell(5);
+                region.innerHTML = unparsed_json[i].region;
+                var hostname = row.insertCell(6);
+                hostname.innerHTML = unparsed_json[i].hostname;
+                var phone = row.insertCell(7);
+                phone.innerHTML = unparsed_json[i].phone;
+                var time = row.insertCell(8);
+                time.innerHTML = unparsed_json[i].time;
+                var org = row.insertCell(9);
+                org.innerHTML = unparsed_json[i].org;
 
-		}
+            }
 
 
 	}
@@ -95,6 +93,8 @@ get_table();
 		<button class="btn btn-default" type="submit">Submit</button>
 	</div>
 </form>
+
+<pre hidden='hidden' id = "jsonpretty"></pre>
 <div class="table-responsive">
 <table id="ipInfoTable" class="table">
     <tr>
@@ -111,7 +111,5 @@ get_table();
     </tr>
 </table>
     </div>
-<pre hidden='hidden' id = "jsonpretty"></pre>
-
  
 </body>

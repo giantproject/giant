@@ -42,9 +42,15 @@ def displaywhatis():
     return render_template("displaywhatis.html", parsed_json=unparsed_json)
 
 
-@app.route('/gettable', methods=['POST'])
-def getTable():
+@app.route('/getiptable', methods=['POST'])
+def getIpTable():
     unparsed_json = requests.get('http://'+ipInfoIp+':5000/ipinfo/table').text
+    return unparsed_json
+
+
+@app.route('/getdomaintable', methods=['POST'])
+def getDomainTable():
+    unparsed_json = requests.get('http://' + pyWhoIsIp + ':5000/pywhois/table').text
     return unparsed_json
 
 

@@ -22,8 +22,64 @@ try {
 	
 }
 
+function get_table() {
+	request = new XMLHttpRequest();
+	request.open("POST", "/getdomaintable", true);
+	request.onreadystatechange = display_table;
+	request.send(null);
+
+}
+
+function display_table() {
+	if (request.readyState == 4 && request.status == 200) {
+            unparsed_json = JSON.parse(request.responseText);
+            var table = document.getElementById("domainTable");
+
+            for (var i = 0; i < unparsed_json.length; i++) {
+                var row = table.insertRow(i+1);
+                var domain = row.insertCell(0);
+                domain.innerHTML = unparsed_json[i].search_domain;
+
+                var country = row.insertCell(1);
+                country.innerHTML = unparsed_json[i].country;
+
+                var server = row.insertCell(2);
+                server.innerHTML = unparsed_json[i].whois_server;
+
+                var state = row.insertCell(3);
+                state.innerHTML = unparsed_json[i].state;
+
+                var reg = row.insertCell(4);
+                reg.innerHTML = unparsed_json[i].registrar;
+
+                var org = row.insertCell(5);
+                org.innerHTML = unparsed_json[i].org;
+
+                var nameserver = row.insertCell(6);
+                for (var j = 0; j < unparsed_json[i].name_servers.length; j++) {
+                    nameserver.innerHTML = unparsed_json[i].name_servers[j]+'<br/>';
+                }
+                var emails = row.insertCell(7);
+                for (var j = 0; j < unparsed_json[i].emails.length; j++) {
+                    emails.innerHTML = unparsed_json[i].emails[j]+'<br/>';
+                }
+
+                var creationDate = row.insertCell(8);
+                creationDate.innerHTML = unparsed_json[i].creation_date[0];
+
+                var expirationDate = row.insertCell(9);
+                expirationDate.innerHTML = unparsed_json[i].expiration_date[0];
+
+            }
+
+
+	}
+
+}
+
 window.onload = function(){
-parse_json();	
+parse_json();
+get_table();
 
 };
 
@@ -56,6 +112,21 @@ parse_json();
 </form>
 
 <pre hidden='hidden' id = "jsonpretty"></pre>
-
+<div class="table-responsive">
+<table id="domainTable" class="table">
+    <tr>
+        <th>Domain</th>
+        <th>Country</th>
+        <th>Who Is Server</th>
+        <th>State</th>
+        <th>Registrar</th>
+        <th>Organization</th>
+        <th>Name Servers</th>
+        <th>Emails</th>
+        <th>Creation Date</th>
+        <th>Expiration Date</th>
+    </tr>
+</table>
+    </div>
  
 </body>
