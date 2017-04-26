@@ -11,20 +11,50 @@ function goback() {
 }
 
 function parse_json() {
-	
+	try{
 	var json = JSON.parse({{parsed_json|tojson}});
 	var jsonpretty = JSON.stringify(json, undefined, 2);
 	var labelpretty = document.getElementById("jsonpretty");
 	labelpretty.innerHTML = jsonpretty;
 	labelpretty.hidden = false;
-	
-	
-	
-	
+	}catch(err) {
+
+	}
+}
+
+function get_table() {
+	request = new XMLHttpRequest();
+	request.open("POST", "/geteventtable", true);
+	request.onreadystatechange = display_table;
+	request.send(null);
+
+}
+
+function display_table() {
+	if (request.readyState == 4 && request.status == 200) {
+            unparsed_json = JSON.parse(request.responseText);
+            var table = document.getElementById("eventTable");
+
+            for (var i = 0; i < unparsed_json.length; i++) {
+                var row = table.insertRow(i+1);
+                var name = row.insertCell(0);
+                name.innerHTML = unparsed_json[i].name;
+
+                var desc = row.insertCell(1);
+                desc.innerHTML = unparsed_json[i].description;
+
+                var analystComments = row.insertCell(2);
+                analystComments.innerHTML = unparsed_json[i].AnalystComments;
+            }
+
+
+	}
+
 }
 
 window.onload = function(){
-parse_json();	
+parse_json();
+get_table();
 
 };
 
@@ -55,12 +85,22 @@ parse_json();
     <p>Enter description:</p>
       <input type="text" name="description"><br>
     <p>Enter comments:</p>
-      <input type="text" name="comments"><br>
+      <input type="text" name="AnalystComments"><br>
     <button type="submit" value="Submit" class="btn btn-default">Submit</button>
   </div>
 </form>
 
 <pre hidden='hidden' id = "jsonpretty"></pre>
+
+<div class="table-responsive">
+<table id="eventTable" class="table">
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Analyst Comments</th>
+    </tr>
+</table>
+    </div>
 
  
 </body>

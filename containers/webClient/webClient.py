@@ -53,6 +53,15 @@ def getDomainTable():
     unparsed_json = requests.get('http://' + pyWhoIsIp + ':5000/pywhois/table').text
     return unparsed_json
 
+@app.route('/geteventtable', methods=['POST'])
+def getEventTable():
+    unparsed_json = requests.get('http://' + eventIp + ':5000/event/table').text
+    return unparsed_json
+
+@app.route('/getwhatistable', methods=['POST'])
+def getWhatIsTable():
+    unparsed_json = requests.get('http://' + whatIsIp + ':5000/whatis/table').text
+    return unparsed_json
 
 @app.route('/ipinfo', methods=['POST'])
 def ipInfo():
@@ -83,7 +92,7 @@ def pyWhoIsCLI():
 def event():
     r = requests.post('http://' + eventIp + ':5000/event', request.form)
     if r.status_code == 200:
-        return r.text
+        return render_template('displayevent.html', parsed_json = r.text)
     return request.form
 
 

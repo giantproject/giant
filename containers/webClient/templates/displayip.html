@@ -10,12 +10,14 @@ function goback() {
 }
 
 function parse_json() {
-	
+	try {
 	var json = JSON.parse({{parsed_json|tojson}});
 	var jsonpretty = JSON.stringify(json, undefined, 2);
 	var labelpretty = document.getElementById("jsonpretty");
 	labelpretty.innerHTML = jsonpretty;
 	labelpretty.hidden = false;
+	}catch (err) {
+	}
 }
 
 function get_table() {

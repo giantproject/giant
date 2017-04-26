@@ -10,20 +10,57 @@ function goback() {
 }
 
 function parse_json() {
-
+try {
 	var json = JSON.parse({{parsed_json|tojson}});
 	var jsonpretty = JSON.stringify(json, undefined, 2);
 	var labelpretty = document.getElementById("jsonpretty");
 	labelpretty.innerHTML = jsonpretty;
 	labelpretty.hidden = false;
+}catch (err) {
+}
+}
 
-		
+function get_table() {
+	request = new XMLHttpRequest();
+	request.open("POST", "/getwhatistable", true);
+	request.onreadystatechange = display_table;
+	request.send(null);
 
-	
+}
+
+function display_table() {
+	if (request.readyState == 4 && request.status == 200) {
+	        var labelpretty = document.getElementById("jsonpretty");
+	        labelpretty.innerHTML = request.responseText;
+            unparsed_json = JSON.parse(request.responseText);
+            var table = document.getElementById("whatisTable");
+
+            for (var i = 0; i < unparsed_json.length; i++) {
+                var row = table.insertRow(i+1);
+                var protocal = row.insertCell(0);
+                protocal.innerHTML = unparsed_json[i].protocal;
+
+                var desc = row.insertCell(1);
+                desc.innerHTML = unparsed_json[i].Description;
+
+                var port = row.insertCell(2);
+                port.innerHTML = unparsed_json[i]["Port Number"];
+
+                var notes = row.insertCell(3);
+                notes.innerHTML = unparsed_json[i]["Assignment Notes"];
+
+                var service = row.insertCell(4);
+                service.innerHTML = unparsed_json[i]["Service Name"];
+            }
+
+
+	}
+
 }
 
 window.onload = function(){
-parse_json();	
+parse_json();
+get_table();
 
 };
 
@@ -58,6 +95,18 @@ parse_json();
 </form>
 
 <pre hidden='hidden' id = "jsonpretty"></pre>
+
+<div class="table-responsive">
+<table id="whatisTable" class="table">
+    <tr>
+        <th>Transport Protocal</th>
+        <th>Description</th>
+        <th>Port Number</th>
+        <th>Assignment Notes</th>
+        <th>Service Name</th>
+    </tr>
+</table>
+    </div>
 
  
 </body>
