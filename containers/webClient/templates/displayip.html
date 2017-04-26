@@ -2,6 +2,23 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
 </head>
 
 <script>
@@ -29,14 +46,43 @@ function get_table() {
 function display_table() {
 	if (request.readyState == 4 && request.status == 200) {
 		unparsed_json = JSON.parse(request.responseText);
-		var table = document.getElementById("ipInfoTable");
-	
+		var pre = document.getElementById("jsonpretty");
+		pre.innerHTML = unparsed_json;
+        var table = document.getElementById("ipInfoTable");
+
+		for (var i = 0; i < unparsed_json.length; i++) {
+            var row = table.insertRow(i+1);
+            var ip = row.insertCell(0);
+            ip.innerHTML = unparsed_json[i].ip;
+            var loc = row.insertCell(1);
+            loc.innerHTML = unparsed_json[i].loc;
+            var postal = row.insertCell(2);
+            postal.innerHTML = unparsed_json[i].postal;
+            var city = row.insertCell(3);
+            city.innerHTML = unparsed_json[i].city;
+            var country = row.insertCell(4);
+            country.innerHTML = unparsed_json[i].country;
+            var region = row.insertCell(5);
+            region.innerHTML = unparsed_json[i].region;
+            var hostname = row.insertCell(6);
+            hostname.innerHTML = unparsed_json[i].hostname;
+            var phone = row.insertCell(7);
+            phone.innerHTML = unparsed_json[i].phone;
+            var time = row.insertCell(8);
+            time.innerHTML = unparsed_json[i].time;
+            var org = row.insertCell(9);
+            org.innerHTML = unparsed_json[i].org;
+
+		}
+
+
 	}
 
 }
 
 window.onload = function(){
-parse_json();	
+parse_json();
+get_table();
 
 };
 
@@ -58,7 +104,6 @@ parse_json();
     </ul>
   </div>
 </nav>
-<button type="button" onclick="get_table()">TEST</button>
 <form action="/ipinfo" method="post">
 	<div class="container">
 		<h1>Ip Info</h1>
@@ -67,8 +112,19 @@ parse_json();
 		<button class="btn btn-default" type="submit">Submit</button>
 	</div>
 </form>
-<table hidden="hidden" id="ipInfoTable">
-
+<table id="ipInfoTable">
+    <tr>
+        <th>IP</th>
+        <th>Location</th>
+        <th>Postal Code</th>
+        <th>City</th>
+        <th>Country</th>
+        <th>Region</th>
+        <th>Hostname</th>
+        <th>Phone</th>
+        <th>Time</th>
+        <th>Organization</th>
+    </tr>
 </table>
 <pre hidden='hidden' id = "jsonpretty"></pre>
 
