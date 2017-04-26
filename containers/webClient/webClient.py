@@ -42,6 +42,12 @@ def displaywhatis():
     return render_template("displaywhatis.html", parsed_json=unparsed_json)
 
 
+@app.route('/gettable', methods=['POST'])
+def getTable():
+    unparsed_json = requests.get('http://'+ipInfoIp+':5000/ipinfo/table').text
+    return unparsed_json
+
+
 @app.route('/ipinfo', methods=['POST'])
 def ipInfo():
     ip = request.form['ip']
@@ -52,7 +58,7 @@ def ipInfo():
 def ipInfoCLI():
     ip = request.form['ip']
     return requests.get('http://' + ipInfoIp + ':5000/ipinfo/' + ip).text
-	
+
 
 @app.route('/pywhois', methods=['POST'])
 def pyWhoIs():

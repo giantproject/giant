@@ -16,10 +16,23 @@ function parse_json() {
 	var labelpretty = document.getElementById("jsonpretty");
 	labelpretty.innerHTML = jsonpretty;
 	labelpretty.hidden = false;
+}
+
+function get_table() {
+	request = new XMLHttpRequest();
+	request.open("POST", "/gettable", true);
+	request.onreadystatechange = display_table;
+	request.send(null);
+
+}
+
+function display_table() {
+	if (request.readyState == 4 && request.status == 200) {
+		unparsed_json = JSON.parse(request.responseText);
+		var table = document.getElementById("ipInfoTable");
 	
-	
-	
-	
+	}
+
 }
 
 window.onload = function(){
@@ -45,7 +58,7 @@ parse_json();
     </ul>
   </div>
 </nav>
-
+<button type="button" onclick="get_table()">TEST</button>
 <form action="/ipinfo" method="post">
 	<div class="container">
 		<h1>Ip Info</h1>
@@ -54,7 +67,9 @@ parse_json();
 		<button class="btn btn-default" type="submit">Submit</button>
 	</div>
 </form>
+<table hidden="hidden" id="ipInfoTable">
 
+</table>
 <pre hidden='hidden' id = "jsonpretty"></pre>
 
  
