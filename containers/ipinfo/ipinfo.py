@@ -29,7 +29,7 @@ def ipinfo(ip=''):
   lookup = "http://ipinfo.io/" + ip
   result = requests.get(lookup)
   if (result.text == invalidString):
-    return "{\"status\": \"Failure\", \"error\": {}}", format(invalidString)
+    return json.dumps({"status": "Failure", "error": invalidString})
   result = json.loads(result.text)
   result['time'] = str(datetime.datetime.now())  # This prevents it being stored as a nested list dictionary
   insertionResult = insertRecord(result)

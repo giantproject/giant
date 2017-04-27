@@ -69,11 +69,12 @@ def pyWhoIsCLI():
 
 
 @app.route('/event', methods=['POST'])
-@app.route('/event/cli', methods=['POST'])  # Makes it easier for the CLI to work
 def event():
     unparsed_json = requests.post('http://' + eventIp + ':5000/event', request.form).text
     return render_template('displayevent.html', parsed_json=unparsed_json)
-
+@app.route('/event/cli', methods=['POST'])  # Makes it easier for the CLI to work
+def eventCLI():
+    return requests.post('http://' + eventIp + ':5000/event', request.form).text
 
 @app.route('/whatis', methods=['POST'])
 def whatIs():
