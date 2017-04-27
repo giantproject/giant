@@ -4,7 +4,7 @@ import requests
 
 
 baseProto = "http://"
-baseurl = "192.168.7.15:5000"
+baseurl = "192.168.7.4:5000"
 baseRequest = baseProto + baseurl
 def callContainer(url, container, form):
   r = requests.post(url + "/" + container + "/cli", form)
