@@ -21,7 +21,7 @@ def home():
 @app.route('/displayip.html')
 def displayip():
     unparsed_json = ()
-    return render_template("displayip.html", parsed_json=unparsed_json);
+    return render_template("displayip.html", parsed_json=unparsed_json)
 
 
 @app.route('/displaydomain.html')
@@ -45,14 +45,15 @@ def displaywhatis():
 @app.route('/ipinfo', methods=['POST'])
 def ipInfo():
     ip = request.form['ip']
-    unparsed_json = requests.get('http://'+ipInfoIp+':5000/ipinfo/'+ip).text
-    return render_template('displayip.html', parsed_json = unparsed_json)
+    unparsed_json = requests.get('http://' + ipInfoIp + ':5000/ipinfo/' + ip).text
+    return render_template('displayip.html', parsed_json=unparsed_json)
+
 
 @app.route("/ipinfo/cli", methods=['POST'])
 def ipInfoCLI():
     ip = request.form['ip']
     return requests.get('http://' + ipInfoIp + ':5000/ipinfo/' + ip).text
-	
+
 
 @app.route('/pywhois', methods=['POST'])
 def pyWhoIs():
@@ -64,15 +65,14 @@ def pyWhoIs():
 @app.route('/pywhois/cli', methods=['POST'])
 def pyWhoIsCLI():
     domain = request.form['domain']
-    return requests.get('http://'+pyWhoIsIp+':5000/pywhois/'+domain).text
+    return requests.get('http://' + pyWhoIsIp + ':5000/pywhois/' + domain).text
+
 
 @app.route('/event', methods=['POST'])
-@app.route('/event/cli',methods=['POST']) # Makes it easier for the CLI to work
+@app.route('/event/cli', methods=['POST'])  # Makes it easier for the CLI to work
 def event():
-    r = requests.post('http://' + eventIp + ':5000/event', request.form)
-    if r.status_code == 200:
-        return r.text
-    return json.dumps(request.form) # because you can't return a dict
+    unparsed_json = requests.post('http://' + eventIp + ':5000/event', request.form).text
+    return render_template('displayevent.html', parsed_json=unparsed_json)
 
 
 @app.route('/whatis', methods=['POST'])
@@ -86,6 +86,7 @@ def whatIs():
 
     return render_template('displaywhatis.html', parsed_json=unparsed_json)
 
+
 @app.route('/whatis/cli', methods=['POST'])
 def whatsCLI():
     port = request.form['port']
@@ -94,6 +95,7 @@ def whatsCLI():
         return requests.get('http://' + whatIsIp + ':5000/whatis/' + port + '/' + proto).text
     else:
         return requests.get('http://' + whatIsIp + ':5000/whatis/' + port).text
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
