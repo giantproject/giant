@@ -35,15 +35,15 @@ def pywhois(domain):
 def insertRecord(record, domain):
     try:
         record['search_domain'] = domain
-        id = db.pywhois.insert_one(record).inserted_id
-        return {"status":"Success", "id":str(id)}
+        db.pywhois.insert_one(record)
+        return {"status":"Success" }
     except Exception as e:
         return {"status":"Failure", "error":str(e)}
 
 
 def findRecord(domain):
     try:
-        record = db.pywhois.find_one({'search_domain':domain})
+        record = db.pywhois.find_one({'search_domain':domain}, {"_id":False})
         if (record is not None):
             return record
         else:
@@ -55,7 +55,7 @@ def findRecord(domain):
 @app.route("/pywhois/table/<amount>")
 def findMany(amount=10):
   try:
-    recordList = db.pywhois.find().sort("time", -1).limit(int(amount))  # The -1 means from soonest to latest
+    recordList = db.pywhois.find({}, {"_id":False}).sort("time", -1).limit(int(amount))  # The -1 means from soonest to latest
     return json_util.dumps(recordList) # Only return the amount requested because of the limit above
   except:
     return json.dumps({"Error": "There was an error returning the information to you. My apologies"})

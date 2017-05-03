@@ -24,8 +24,7 @@ def help():
 def ipinfo(ip=''):
   findResult = findRecord(ip)
   if (findResult is not None):
-    id = findResult.get('_id')
-    return json_util.dumps({"status": "Found", "id": str(id), "result": findResult})
+    return json_util.dumps({"status": "Found",  "result": findResult})
   lookup = "http://ipinfo.io/" + ip
   result = requests.get(lookup)
   if (result.text == invalidString):
@@ -41,8 +40,8 @@ def ipinfo(ip=''):
 
 def insertRecord(record):
   try:
-    id = db.ipinfo.insert_one(record).inserted_id
-    return {"status": "Success", "id": str(id)}
+    db.ipinfo.insert_one(record)
+    return {"status": "Success"}
   except Exception as e:
     return {"status": "Failure", "error": str(e)}
 
@@ -61,7 +60,8 @@ def findRecord(ip):
 @app.route("/ipinfo/table/<amount>")
 def findMany(amount=10):
   try:
-    recordList = db.ipinfo.find().sort("time", -1).limit(int(amount))  # The -1 means from soonest to latest
+    recordList = db.ipinfo.find({}, {"_id":False}).sort("time", -1).limit(int(amount))  # The -1 means from soonest to latest
+
     return json_util.dumps(recordList) # Only return the amount requested because of the limit above
   except:
     return json.dumps({"Error": "There was an error returning the information to you. My apologies"})
