@@ -40,7 +40,7 @@ def event():
 def insertRecord(record):
   try:
     id = db.event.insert_one(record).inserted_id
-    return {"status": "Success", "id": id}
+    return {"status": "Success"}
   except Exception as e:
     return {"status": "Failure", "error": str(e)}
 

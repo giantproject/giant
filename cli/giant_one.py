@@ -44,12 +44,12 @@ def whatis(port, proto):
 @cli.command()
 @click.option("--name", required=True, help="Name of the event being created")
 @click.option("--description", default="", help="Description of the event")
-@click.option("--AnalystComments", default="", help="Analysts Comments about the event")
-def event(name, description, AnalystComments):
+@click.option("--analystcomments", default="", help="Analysts Comments about the event")
+def event(name, description, analystcomments):
   form={}
   form['name'] = name
   form['description'] = description
-  form['AnalystComments'] = AnalystComments
+  form['AnalystComments'] = analystcomments
   click.echo(callContainer(baseRequest, "event",form))
 
 
