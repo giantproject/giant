@@ -29,31 +29,31 @@ parse_json();
 
 </script>
 
-<body>
+<body style="background-color:rgb(192,192,192)">
 
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default" style="background-color:#e6e6e6">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand">Giant</a>
+      <a class="navbar-brand" style="color:#000000">Giant</a>
     </div>
     <ul class="nav navbar-nav">
-      <li><a href="home.html">Home</a></li>
-      <li><a href="displayip.html">Ip Info</a></li>
-      <li><a href="displaydomain.html">Who Is</a></li>
-      <li><a href="displaywhatis.html">What Is</a></li>
-	  <li class="active"><a href="displayevent.html">Event</a></li>
+      <li><a href="home.html" style="color:#000000">Home</a></li>
+      <li><a href="displayip.html" style="color:#000000">Ip Info</a></li>
+      <li><a href="displaydomain.html" style="color:#000000">Who Is</a></li>
+      <li><a href="displaywhatis.html" style="color:#000000">What Is</a></li>
+	  <li class="active"><a href="displayevent.html" style="color:#000000">Event</a></li>
     </ul>
   </div>
 </nav>
 
 <form action="/event" method="post">
   <div class="container">
-    <h1>Event</h1>
-    <p>Enter name:</p>
+    <h1 style="color:#000000">Event</h1>
+    <p style="color:#000000">Enter name:</p>
       <input type="text" name="name"><br>
-    <p>Enter description:</p>
+    <p style="color:#000000">Enter description:</p>
       <input type="text" name="description"><br>
-    <p>Enter comments:</p>
+    <p style="color:#000000">Enter comments:</p>
       <input type="text" name="AnalystComments"><br>
     <button type="submit" class="btn btn-default">Submit</button>
   </div>
