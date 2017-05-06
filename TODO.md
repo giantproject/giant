@@ -1,8 +1,5 @@
 # TODO's
-- Build out REST api
-- Build Flask page
-- Decide on at least 5 more tools
-- Get containers mounting DB volumes
-- Create user partitions
-- Get certificates for encrypted transmissions
-- Get everyone to join organization
+Make event model the STIX model (Adam)
+Find new and permanent name of project.
+Purge branches off unnecessary stuff
+Start filing each of these as issues instead of how we are doing it

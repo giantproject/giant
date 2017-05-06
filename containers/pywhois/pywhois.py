@@ -12,10 +12,10 @@ db = client.db
 
 @app.route('/')
 def help():
-    help = "Format for accessing. 'https://ipAddress/pywhois/domain' But anyway You made it here"
+    help = "Format for accessing. 'https://ipAddress/whois/domain' But anyway You made it here"
     return help
-@app.route('/pywhois/<domain>')
-def pywhois(domain):
+@app.route('/whois/<domain>')
+def whois(domain):
     findResult = findRecord(domain)
     if (findResult is not None):
         id = findResult.get('_id')
@@ -35,15 +35,15 @@ def pywhois(domain):
 def insertRecord(record, domain):
     try:
         record['search_domain'] = domain
-        id = db.pywhois.insert_one(record).inserted_id
-        return {"status":"Success", "id":str(id)}
+        db.whois.insert_one(record)
+        return {"status":"Success"}
     except Exception as e:
         return {"status":"Failure", "error":str(e)}
 
 
 def findRecord(domain):
     try:
-        record = db.pywhois.find_one({'search_domain':domain})
+        record = db.whois.find_one({'search_domain':domain})
         if (record is not None):
             return record
         else:
@@ -51,11 +51,11 @@ def findRecord(domain):
     except:
         return None
 
-@app.route("/pywhois/table")
-@app.route("/pywhois/table/<amount>")
+@app.route("/whois/table")
+@app.route("/whois/table/<amount>")
 def findMany(amount=10):
   try:
-    recordList = db.pywhois.find().sort("time", -1).limit(int(amount))  # The -1 means from soonest to latest
+    recordList = db.whois.find().sort("time", -1).limit(int(amount))  # The -1 means from soonest to latest
     return json_util.dumps(recordList) # Only return the amount requested because of the limit above
   except:
     return json.dumps({"Error": "There was an error returning the information to you. My apologies"})

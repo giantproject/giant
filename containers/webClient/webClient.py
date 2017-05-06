@@ -6,7 +6,7 @@ import json
 
 app = Flask(__name__)
 ipInfoIp = os.environ['IPINFO_1_PORT_5000_TCP_ADDR']
-pyWhoIsIp = os.environ['PYWHOIS_1_PORT_5000_TCP_ADDR']
+whoisIp = os.environ['whois_1_PORT_5000_TCP_ADDR']
 eventIp = os.environ['EVENT_1_PORT_5000_TCP_ADDR']
 whatIsIp = os.environ['WHATIS_1_PORT_5000_TCP_ADDR']
 
@@ -55,17 +55,17 @@ def ipInfoCLI():
     return requests.get('http://' + ipInfoIp + ':5000/ipinfo/' + ip).text
 
 
-@app.route('/pywhois', methods=['POST'])
-def pyWhoIs():
+@app.route('/whois', methods=['POST'])
+def whois():
     domain = request.form['domain']
-    unparsed_json = requests.get('http://' + pyWhoIsIp + ':5000/pywhois/' + domain).text
+    unparsed_json = requests.get('http://' + whoisIp + ':5000/whois/' + domain).text
     return render_template('displaydomain.html', parsed_json=unparsed_json)
 
 
-@app.route('/pywhois/cli', methods=['POST'])
-def pyWhoIsCLI():
+@app.route('/whois/cli', methods=['POST'])
+def whoisCLI():
     domain = request.form['domain']
-    return requests.get('http://' + pyWhoIsIp + ':5000/pywhois/' + domain).text
+    return requests.get('http://' + whoisIp + ':5000/whois/' + domain).text
 
 
 @app.route('/event', methods=['POST'])
